@@ -28,13 +28,13 @@ public sealed class ChunkMesher
 
     public Mesh BuildMesh(Chunk chunk)
     {
-        var verts = new List<float>(Chunk.Size * Chunk.Height * Chunk.Size * 24);
-        var inds = new List<int>(Chunk.Size * Chunk.Height * Chunk.Size * 36);
+        var verts = new List<float>(Chunk.Width * Chunk.Height * Chunk.Depth * 24);
+        var inds = new List<int>(Chunk.Width * Chunk.Height * Chunk.Depth * 36);
         int vbase = 0;
 
-        for (int z = 0; z < Chunk.Size; z++)
+        for (int z = 0; z < Chunk.Depth; z++)
             for (int y = 0; y < Chunk.Height; y++)
-                for (int x = 0; x < Chunk.Size; x++)
+                for (int x = 0; x < Chunk.Width; x++)
                 {
                     if (chunk.Get(x, y, z) == Block.Air) continue;
 

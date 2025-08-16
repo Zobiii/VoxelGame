@@ -6,14 +6,15 @@ namespace VoxelGame.World;
 /// A single 16x16x16 chunk. Coordinates are local to the chunk
 /// </summary>
 
-public sealed class Chunk
+public partial class Chunk
 {
-    public const int Size = 16;
     public const int Height = 16;
+    public const int Width = 500;
+    public const int Depth = 500;
 
     public readonly Vector3i Origin;
 
-    private readonly Block[,,] _blocks = new Block[Size, Height, Size];
+    private readonly Block[,,] _blocks = new Block[Width, Height, Depth];
 
     public Chunk(Vector3i origin)
     {
@@ -24,25 +25,24 @@ public sealed class Chunk
     public void Set(int x, int y, int z, Block b) => _blocks[x, y, z] = b;
 
     public bool InBounds(int x, int y, int z)
-        => x >= 0 && x < Size && y >= 0 && y < Height && z >= 0 && z < Size;
+        => x >= 0 && x < Width && y >= 0 && y < Height && z >= 0 && z < Depth;
 
-    /// <summary>
-    /// Fill a simple demo shape: a rolling hill-ish surface for visual variety
-    /// </summary>
-
-    public void GenerateDemoContent()
+    public void GenerateFromNoise(PerlinNoise noise, float scale = 0.01f, int minHeight = 3, int maxHeight = Height - 1, int octaves = 4)
     {
-        for (int z = 0; z < Size; z++)
-            for (int x = 0; x < Size; x++)
-            {
-                //Small deterministic height variation without noise libs
-                float fx = x / (float)Size;
-                float fz = z / (float)Size;
-                int h = 6 + (int)(4 * MathF.Sin(fx * MathF.PI * 2) * MathF.Cos(fz * MathF.PI * 2));
-                h = Math.Clamp(h, 1, Height - 1);
+        if (minHeight < 0) minHeight = 0;
+        if (maxHeight >= Height) maxHeight = Height - 1;
+        if (minHeight > maxHeight) minHeight = maxHeight;
 
-                for (int y = 0; y <= h; y++)
-                    _blocks[x, y, z] = Block.Solid;
+        for (int z = 0; z < Depth; z++)
+            for (int x = 0; x < Width; x++)
+            {
+                float n = noise.OctavePerlin(x * scale, z * scale, octaves, 0.5f, 2.0f) * 0.25f;
+                int h = minHeight + (int)MathF.Round(n * (maxHeight - minHeight));
+
+                for (int y = 0; y < Height; y++)
+                {
+                    Set(x, y, z, y <= h ? Block.Solid : Block.Air);
+                }
             }
     }
 }

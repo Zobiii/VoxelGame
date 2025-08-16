@@ -36,6 +36,9 @@ public sealed class Game : GameWindow
     {
         base.OnLoad();
 
+        int seed = 123;
+        var noise = new PerlinNoise(seed);
+
         GL.Enable(EnableCap.DepthTest);
         GL.ClearColor(0.15f, 0.18f, 0.22f, 1f);
 
@@ -43,7 +46,8 @@ public sealed class Game : GameWindow
 
 
         var chunk = new Chunk(new Vector3i(0, 0, 0));
-        chunk.GenerateDemoContent();
+        chunk.GenerateFromNoise(noise, scale: 0.12f, minHeight: 3, maxHeight: Chunk.Height - 1, octaves: 4);
+
 
         var mesher = new ChunkMesher();
         _chunkMesh = mesher.BuildMesh(chunk);
