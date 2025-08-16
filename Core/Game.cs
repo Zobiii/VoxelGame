@@ -46,7 +46,19 @@ public sealed class Game : GameWindow
 
 
         var chunk = new Chunk(new Vector3i(0, 0, 0));
-        chunk.GenerateFromNoise(noise, scale: 0.12f, minHeight: 3, maxHeight: Chunk.Height - 1, octaves: 4);
+        chunk.GenerateFromNoiseSmoothed(
+        noise,
+        minHeight: 4,
+        maxHeight: Math.Min(Chunk.Height - 1, 100),
+        baseScale: 0.01f,
+        detailScale: 0.04f,
+        baseOctaves: 4,
+        detailOctaves: 6,
+        persistence: 0.5f,
+        lacunarity: 1.9f,
+        blurPasses: 2,
+        optionalSlopeClamp: 2
+        );
 
 
         var mesher = new ChunkMesher();
