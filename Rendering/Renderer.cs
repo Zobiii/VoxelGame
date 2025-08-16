@@ -26,7 +26,7 @@ public sealed class Renderer : IDisposable
         _shader.Set("uColor", color);
         _shader.Set("uLightDir", LightDirection);
 
-        GL.CullFace(CullFaceMode.Back);
+        GL.CullFace(TriangleFace.Back);
         GL.Enable(EnableCap.CullFace);
 
         mesh.Draw();
