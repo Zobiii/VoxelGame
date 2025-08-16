@@ -1,6 +1,6 @@
 namespace VoxelGame.World;
 
-//// <summary>
+/// <summary>
 /// Minimal block representation. For now all solid white.
 /// </summary>
 
