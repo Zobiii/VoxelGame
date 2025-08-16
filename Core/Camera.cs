@@ -24,7 +24,7 @@ public sealed class Camera
     {
         Yaw += yawDelta;
         Pitch += pitchDelta;
-        Pitch += MathHelper.Clamp(Pitch, -89f, 89f);
+        Pitch = MathHelper.Clamp(Pitch, -89f, 89f);
     }
 
     public void Move(KeyboardState kb, float dt, float speed)

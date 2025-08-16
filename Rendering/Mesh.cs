@@ -33,7 +33,7 @@ public sealed class Mesh : IDisposable
 
         int stride = 6 * sizeof(float);
         GL.EnableVertexAttribArray(0);
-        GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, stride, 0);
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
 
         GL.EnableVertexAttribArray(1);
         GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, stride, 3 * sizeof(float));

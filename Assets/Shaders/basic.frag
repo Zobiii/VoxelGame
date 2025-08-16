@@ -1,10 +1,9 @@
 #version 330 core
 in vec3 vNormal;
-
 out vec4 FragColor;
 
-uniform vec3 uColor;     // cube color (white)
-uniform vec3 uLightDir;  // directional light direction (world space)
+uniform vec3 uColor;
+uniform vec3 uLightDir;
 
 void main()
 {

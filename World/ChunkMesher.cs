@@ -44,7 +44,7 @@ public sealed class ChunkMesher
                         var nx = x + (int)n.X;
                         var ny = y + (int)n.Y;
                         var nz = z + (int)n.Z;
-                        bool neighborSolid = chunk.InBounds(nx, ny, nz) && chunk.Get(x, y, z) == Block.Solid;
+                        bool neighborSolid = chunk.InBounds(nx, ny, nz) && chunk.Get(nx, ny, nz) == Block.Solid;
                         if (neighborSolid) continue;
 
                         for (int i = 0; i < 4; i++)
